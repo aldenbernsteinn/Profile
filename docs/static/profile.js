@@ -8,7 +8,16 @@ const animate = (element, animation) => {
 // Fetch GitHub projects
 const fetchGitHubProjects = async (username) => {
   try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos`);
+    const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&type=public`, {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const data = await response.json();
     return data;
   } catch (error) {
@@ -181,38 +190,39 @@ const initProfile = async () => {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  createCustomBadge();
   initProfile();
   
   const dialog = document.getElementById('description-dialog');
   const seeMoreBtn = document.querySelector('.see-more-btn');
   const closeBtn = document.querySelector('.close-dialog');
   
-  seeMoreBtn.addEventListener('click', () => {
-    dialog.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  });
-  
-  closeBtn.addEventListener('click', () => {
-    dialog.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  });
-  
-  // Close dialog when clicking outside
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) {
+  if (dialog && seeMoreBtn && closeBtn) {
+    seeMoreBtn.addEventListener('click', () => {
+      dialog.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+    
+    closeBtn.addEventListener('click', () => {
       dialog.style.display = 'none';
       document.body.style.overflow = 'auto';
-    }
-  });
-  
-  // Close dialog on escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && dialog.style.display === 'flex') {
-      dialog.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  });
+    });
+    
+    // Close dialog when clicking outside
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        dialog.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Close dialog on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && dialog.style.display === 'flex') {
+        dialog.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
 });
 
 // Add scroll animations
