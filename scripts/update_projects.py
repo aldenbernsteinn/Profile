@@ -57,6 +57,7 @@ def get_languages_from_repo(username, repo_name, headers):
                 '.yml': 'YAML',
                 '.yaml': 'YAML',
                 '.json': 'JSON',
+                '.md': 'Markdown',
                 '.xml': 'XML',
                 '.ipynb': 'Jupyter Notebook'
             }
@@ -108,10 +109,14 @@ def fetch_github_projects(username):
         repos = response.json()
         projects = []
         for repo in repos:
+            # Get detailed language analysis for each repository
+            languages = get_languages_from_repo(username, repo["name"], headers)
+            
             projects.append({
                 "name": repo["name"],
                 "description": repo["description"] or "No description available",
-                "language": repo["language"] or "N/A",
+                "github_language": repo["language"] or "N/A",  # Keep GitHub's detection
+                "detected_languages": languages,  # Add our detailed analysis
                 "html_url": repo["html_url"],
                 "updated_at": repo["updated_at"],
                 "created_at": repo["created_at"],
