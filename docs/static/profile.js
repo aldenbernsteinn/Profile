@@ -7,23 +7,55 @@ const animate = (element, animation) => {
 
 // Fetch GitHub projects
 const fetchGitHubProjects = async (username) => {
-  try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&type=public`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
+    // Try to get cached data first
+    const cachedData = localStorage.getItem('githubProjects');
+    const cacheTimestamp = localStorage.getItem('githubProjectsTimestamp');
     
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Check if we have valid cached data (less than 1 hour old)
+    if (cachedData && cacheTimestamp) {
+        const age = Date.now() - parseInt(cacheTimestamp);
+        if (age < 3600000) { // 1 hour in milliseconds
+            return JSON.parse(cachedData);
+        }
     }
     
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching GitHub projects:', error);
-    return [];
-  }
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&type=public`, {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (response.status === 403) {
+            // Rate limited - use cached data if available, otherwise show error
+            if (cachedData) {
+                return JSON.parse(cachedData);
+            }
+            throw new Error('Rate limited by GitHub API');
+        }
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Cache the successful response
+        localStorage.setItem('githubProjects', JSON.stringify(data));
+        localStorage.setItem('githubProjectsTimestamp', Date.now().toString());
+        
+        return data;
+    } catch (error) {
+        console.error('Error fetching GitHub projects:', error);
+        
+        // Return cached data if available
+        if (cachedData) {
+            return JSON.parse(cachedData);
+        }
+        
+        // If no cached data, return empty array
+        return [];
+    }
 };
 
 // Enhanced createProjectCard function
@@ -70,122 +102,142 @@ const initProfile = async () => {
     // Load repo stats first
     await loadRepoStats();
 
-    // Fetch and display projects
-    allProjects = await fetchGitHubProjects(username);
-
-    // Update last commit dates and build search index
-    await Promise.all(allProjects.map(async (project) => {
-        const lastCommitDate = await getLastCommitDate(project);
-        repoStats.last_commits[project.name] = lastCommitDate.toISOString();
+    try {
+        allProjects = await fetchGitHubProjects(username);
         
-        // Build search index for each project
-        const searchTerms = new Set([
-            ...(project.name || '').toLowerCase().split(/[-_\s]+/),
-            ...(project.description || '').toLowerCase().split(/\s+/),
-            (project.language || '').toLowerCase()
-        ]);
-        searchIndex.set(project, searchTerms);
-    }));
-    await saveRepoStats();
+        if (allProjects.length === 0) {
+            projectsContainer.innerHTML = `
+                <div class="error-message">
+                    Unable to load projects. Please try again later.
+                    <a href="https://github.com/${username}" target="_blank">
+                        View projects on GitHub
+                    </a>
+                </div>`;
+            return;
+        }
 
-    // Optimized search function
-    const matchesSearch = (project, searchTerm) => {
-        if (!searchTerm) return true;
-        const terms = searchIndex.get(project);
-        return terms.has(searchTerm) || 
-               Array.from(terms).some(term => term.includes(searchTerm));
-    };
+        // Update last commit dates and build search index
+        await Promise.all(allProjects.map(async (project) => {
+            const lastCommitDate = await getLastCommitDate(project);
+            repoStats.last_commits[project.name] = lastCommitDate.toISOString();
+            
+            // Build search index for each project
+            const searchTerms = new Set([
+                ...(project.name || '').toLowerCase().split(/[-_\s]+/),
+                ...(project.description || '').toLowerCase().split(/\s+/),
+                (project.language || '').toLowerCase()
+            ]);
+            searchIndex.set(project, searchTerms);
+        }));
+        await saveRepoStats();
 
-    // Memoized sort function
-    const getSortValue = (() => {
-        const cache = new Map();
-        
-        return (project, sortMethod) => {
-            const cacheKey = `${project.name}-${sortMethod}`;
-            if (cache.has(cacheKey)) return cache.get(cacheKey);
-            
-            let value;
-            if (sortMethod === 'relevance') {
-                value = repoStats.click_counts[project.name] || 0;
-            } else { // newest
-                value = new Date(repoStats.last_commits[project.name] || 0).getTime();
-            }
-            
-            cache.set(cacheKey, value);
-            return value;
+        // Optimized search function
+        const matchesSearch = (project, searchTerm) => {
+            if (!searchTerm) return true;
+            const terms = searchIndex.get(project);
+            return terms.has(searchTerm) || 
+                   Array.from(terms).some(term => term.includes(searchTerm));
         };
-    })();
 
-    // Optimized filter and sort function
-    const filterAndSortProjects = (() => {
-        let lastSearchTerm = '';
-        let lastSortMethod = '';
-        let cachedResults = [];
-
-        return (searchTerm = '', sortMethod = 'relevance') => {
-            searchTerm = searchTerm.toLowerCase();
+        // Memoized sort function
+        const getSortValue = (() => {
+            const cache = new Map();
             
-            // Use cached results if nothing changed
-            if (searchTerm === lastSearchTerm && sortMethod === lastSortMethod) {
-                return;
-            }
-
-            // Filter projects
-            const filteredProjects = searchTerm ? 
-                allProjects.filter(project => matchesSearch(project, searchTerm)) :
-                allProjects;
-
-            // Sort projects
-            filteredProjects.sort((a, b) => {
-                if (searchTerm) {
-                    // Prioritize exact language matches
-                    const langA = (a.language || '').toLowerCase() === searchTerm;
-                    const langB = (b.language || '').toLowerCase() === searchTerm;
-                    if (langA !== langB) return langB - langA;
+            return (project, sortMethod) => {
+                const cacheKey = `${project.name}-${sortMethod}`;
+                if (cache.has(cacheKey)) return cache.get(cacheKey);
+                
+                let value;
+                if (sortMethod === 'relevance') {
+                    value = repoStats.click_counts[project.name] || 0;
+                } else { // newest
+                    value = new Date(repoStats.last_commits[project.name] || 0).getTime();
                 }
                 
-                return getSortValue(b, sortMethod) - getSortValue(a, sortMethod);
-            });
+                cache.set(cacheKey, value);
+                return value;
+            };
+        })();
 
-            // Update cache
-            lastSearchTerm = searchTerm;
-            lastSortMethod = sortMethod;
-            cachedResults = filteredProjects;
+        // Optimized filter and sort function
+        const filterAndSortProjects = (() => {
+            let lastSearchTerm = '';
+            let lastSortMethod = '';
+            let cachedResults = [];
 
-            // Render results with optimized DOM updates
-            const fragment = document.createDocumentFragment();
-            filteredProjects.forEach((project, index) => {
-                const card = createProjectCard(project);
-                card.style.animationDelay = `${index * 0.05}s`; // Reduced delay
-                card.style.opacity = '0';
-                card.style.animation = 'fadeInUp 0.3s ease forwards'; // Faster animation
-                fragment.appendChild(card);
-            });
+            return (searchTerm = '', sortMethod = 'relevance') => {
+                searchTerm = searchTerm.toLowerCase();
+                
+                // Use cached results if nothing changed
+                if (searchTerm === lastSearchTerm && sortMethod === lastSortMethod) {
+                    return;
+                }
 
-            projectsContainer.innerHTML = '';
-            projectsContainer.appendChild(fragment);
-        };
-    })();
+                // Filter projects
+                const filteredProjects = searchTerm ? 
+                    allProjects.filter(project => matchesSearch(project, searchTerm)) :
+                    allProjects;
 
-    // Add sort event listener with throttling
-    const sortSelect = document.getElementById('sort-select');
-    sortSelect.addEventListener('change', (e) => {
+                // Sort projects
+                filteredProjects.sort((a, b) => {
+                    if (searchTerm) {
+                        // Prioritize exact language matches
+                        const langA = (a.language || '').toLowerCase() === searchTerm;
+                        const langB = (b.language || '').toLowerCase() === searchTerm;
+                        if (langA !== langB) return langB - langA;
+                    }
+                    
+                    return getSortValue(b, sortMethod) - getSortValue(a, sortMethod);
+                });
+
+                // Update cache
+                lastSearchTerm = searchTerm;
+                lastSortMethod = sortMethod;
+                cachedResults = filteredProjects;
+
+                // Render results with optimized DOM updates
+                const fragment = document.createDocumentFragment();
+                filteredProjects.forEach((project, index) => {
+                    const card = createProjectCard(project);
+                    card.style.animationDelay = `${index * 0.05}s`; // Reduced delay
+                    card.style.opacity = '0';
+                    card.style.animation = 'fadeInUp 0.3s ease forwards'; // Faster animation
+                    fragment.appendChild(card);
+                });
+
+                projectsContainer.innerHTML = '';
+                projectsContainer.appendChild(fragment);
+            };
+        })();
+
+        // Add sort event listener with throttling
+        const sortSelect = document.getElementById('sort-select');
+        sortSelect.addEventListener('change', (e) => {
+            const searchBar = document.getElementById('project-search');
+            filterAndSortProjects(searchBar.value, e.target.value);
+        });
+
+        // Add search functionality with optimized debounce
         const searchBar = document.getElementById('project-search');
-        filterAndSortProjects(searchBar.value, e.target.value);
-    });
+        let searchTimeout;
+        searchBar.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                filterAndSortProjects(e.target.value, sortSelect.value);
+            }, 150); // Reduced debounce time
+        });
 
-    // Add search functionality with optimized debounce
-    const searchBar = document.getElementById('project-search');
-    let searchTimeout;
-    searchBar.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            filterAndSortProjects(e.target.value, sortSelect.value);
-        }, 150); // Reduced debounce time
-    });
-
-    // Initial display
-    filterAndSortProjects('', 'relevance');
+        // Initial display
+        filterAndSortProjects('', 'relevance');
+    } catch (error) {
+        projectsContainer.innerHTML = `
+            <div class="error-message">
+                ${error.message}
+                <a href="https://github.com/${username}" target="_blank">
+                    View projects on GitHub
+                </a>
+            </div>`;
+    }
 };
 
 // Initialize when DOM is loaded
