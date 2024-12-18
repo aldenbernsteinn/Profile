@@ -38,29 +38,22 @@ const createProjectCard = (project) => {
     const card = document.createElement('div');
     card.className = 'project-card';
     
-    const clickCount = repoStats.click_counts[project.name] || 0;
-    const lastCommitDate = repoStats.last_commits[project.name] 
-        ? new Date(repoStats.last_commits[project.name])
-        : new Date(0);
-
-    card.innerHTML = `
+    const content = `
         <h3>${project.name}</h3>
-        <p>${project.description || 'No description available'}</p>
-        <div class="project-stats">
-            <span>${project.language || 'N/A'}</span>
-            <span class="click-count">👁 ${clickCount}</span>
-            <span class="last-commit">📅 ${lastCommitDate.toLocaleDateString()}</span>
+        <p class="project-description">${project.description}</p>
+        <div class="language-tags">
+            ${project.detected_languages.map(lang => 
+                `<span class="language-tag">${lang}</span>`
+            ).join('')}
         </div>
-        <a href="${project.html_url}" target="_blank" class="project-link" data-repo="${project.name}">View Project</a>
+        <div class="project-stats">
+            <span>⭐ ${project.stargazers_count}</span>
+            <span>🕒 ${getTimeSince(new Date(project.updated_at))}</span>
+        </div>
+        <a href="${project.html_url}" class="project-link" target="_blank">View Project</a>
     `;
-
-    // Add click event listener
-    const projectLink = card.querySelector('.project-link');
-    projectLink.addEventListener('click', () => {
-        incrementClickCount(project.name);
-        card.querySelector('.click-count').textContent = `👁 ${repoStats.click_counts[project.name]}`;
-    });
-
+    
+    card.innerHTML = content;
     return card;
 };
 
@@ -300,4 +293,25 @@ function timeSince(date) {
     if (interval > 1) return Math.floor(interval) + "m";
     
     return Math.floor(seconds) + "s";
+}
+
+// Helper function to format time
+function getTimeSince(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    const intervals = {
+        year: 31536000,
+        month: 2592000,
+        week: 604800,
+        day: 86400,
+        hour: 3600,
+        minute: 60
+    };
+    
+    for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+        const interval = Math.floor(seconds / secondsInUnit);
+        if (interval >= 1) {
+            return `${interval} ${unit}${interval === 1 ? '' : 's'} ago`;
+        }
+    }
+    return 'Just now';
 }
