@@ -47,11 +47,15 @@ const animate = (element, animation) => {
           <h3>${project.name}</h3>
           <p>${project.description || 'No description available'}</p>
           <div class="project-stats">
-              <span>${project.language || 'N/A'}</span>
-              <span class="click-count">👁 ${clickCount}</span>
-              <span class="last-commit">📅 ${lastCommitDate.toLocaleDateString()}</span>
+              <span class="language-tag">
+                  ${project.language ? `<span class="language-dot"></span>${project.language}` : 'N/A'}
+              </span>
+              <span class="click-count" title="View count">👁 ${clickCount}</span>
+              <span class="last-commit" title="Last updated ${lastCommitDate.toLocaleDateString()}">
+                  📅 ${timeSince(lastCommitDate)} ago
+              </span>
           </div>
-          <a href="${project.html_url}" target="_blank" class="project-link" data-repo="${project.name}">View Project</a>
+          <a href="${project.html_url}" target="_blank" class="project-link" data-repo="${project.name}">View Repository</a>
       `;
   
       // Add click event listener
@@ -71,128 +75,144 @@ const animate = (element, animation) => {
       let allProjects = [];
       let searchIndex = new Map(); // Pre-computed search index
   
-      // Add loading animation
-      projectsContainer.innerHTML = '<div class="loader"></div>';
+      try {
+          // Show loading state
+          projectsContainer.innerHTML = `
+              <div class="loading-state">
+                  <div class="loader"></div>
+                  <p>Loading repositories...</p>
+              </div>
+          `;
   
-      // Load repo stats first
-      await loadRepoStats();
+          // Load repo stats first
+          await loadRepoStats();
   
-      // Fetch and display projects
-      allProjects = await fetchGitHubProjects(username);
+          // Fetch and display projects
+          allProjects = await fetchGitHubProjects(username);
   
-      // Update last commit dates and build search index
-      await Promise.all(allProjects.map(async (project) => {
-          const lastCommitDate = await getLastCommitDate(project);
-          repoStats.last_commits[project.name] = lastCommitDate.toISOString();
-          
-          // Build search index for each project
-          const searchTerms = new Set([
-              ...(project.name || '').toLowerCase().split(/[-_\s]+/),
-              ...(project.description || '').toLowerCase().split(/\s+/),
-              (project.language || '').toLowerCase()
-          ]);
-          searchIndex.set(project, searchTerms);
-      }));
-      await saveRepoStats();
-  
-      // Optimized search function
-      const matchesSearch = (project, searchTerm) => {
-          if (!searchTerm) return true;
-          const terms = searchIndex.get(project);
-          return terms.has(searchTerm) || 
-                 Array.from(terms).some(term => term.includes(searchTerm));
-      };
-  
-      // Memoized sort function
-      const getSortValue = (() => {
-          const cache = new Map();
-          
-          return (project, sortMethod) => {
-              const cacheKey = `${project.name}-${sortMethod}`;
-              if (cache.has(cacheKey)) return cache.get(cacheKey);
+          // Update last commit dates and build search index
+          await Promise.all(allProjects.map(async (project) => {
+              const lastCommitDate = await getLastCommitDate(project);
+              repoStats.last_commits[project.name] = lastCommitDate.toISOString();
               
-              let value;
-              if (sortMethod === 'relevance') {
-                  value = repoStats.click_counts[project.name] || 0;
-              } else { // newest
-                  value = new Date(repoStats.last_commits[project.name] || 0).getTime();
-              }
-              
-              cache.set(cacheKey, value);
-              return value;
+              // Build search index for each project
+              const searchTerms = new Set([
+                  ...(project.name || '').toLowerCase().split(/[-_\s]+/),
+                  ...(project.description || '').toLowerCase().split(/\s+/),
+                  (project.language || '').toLowerCase()
+              ]);
+              searchIndex.set(project, searchTerms);
+          }));
+          await saveRepoStats();
+  
+          // Optimized search function
+          const matchesSearch = (project, searchTerm) => {
+              if (!searchTerm) return true;
+              const terms = searchIndex.get(project);
+              return terms.has(searchTerm) || 
+                     Array.from(terms).some(term => term.includes(searchTerm));
           };
-      })();
   
-      // Optimized filter and sort function
-      const filterAndSortProjects = (() => {
-          let lastSearchTerm = '';
-          let lastSortMethod = '';
-          let cachedResults = [];
-  
-          return (searchTerm = '', sortMethod = 'relevance') => {
-              searchTerm = searchTerm.toLowerCase();
+          // Memoized sort function
+          const getSortValue = (() => {
+              const cache = new Map();
               
-              // Use cached results if nothing changed
-              if (searchTerm === lastSearchTerm && sortMethod === lastSortMethod) {
-                  return;
-              }
-  
-              // Filter projects
-              const filteredProjects = searchTerm ? 
-                  allProjects.filter(project => matchesSearch(project, searchTerm)) :
-                  allProjects;
-  
-              // Sort projects
-              filteredProjects.sort((a, b) => {
-                  if (searchTerm) {
-                      // Prioritize exact language matches
-                      const langA = (a.language || '').toLowerCase() === searchTerm;
-                      const langB = (b.language || '').toLowerCase() === searchTerm;
-                      if (langA !== langB) return langB - langA;
+              return (project, sortMethod) => {
+                  const cacheKey = `${project.name}-${sortMethod}`;
+                  if (cache.has(cacheKey)) return cache.get(cacheKey);
+                  
+                  let value;
+                  if (sortMethod === 'relevance') {
+                      value = repoStats.click_counts[project.name] || 0;
+                  } else { // newest
+                      value = new Date(repoStats.last_commits[project.name] || 0).getTime();
                   }
                   
-                  return getSortValue(b, sortMethod) - getSortValue(a, sortMethod);
-              });
+                  cache.set(cacheKey, value);
+                  return value;
+              };
+          })();
   
-              // Update cache
-              lastSearchTerm = searchTerm;
-              lastSortMethod = sortMethod;
-              cachedResults = filteredProjects;
+          // Optimized filter and sort function
+          const filterAndSortProjects = (() => {
+              let lastSearchTerm = '';
+              let lastSortMethod = '';
+              let cachedResults = [];
   
-              // Render results with optimized DOM updates
-              const fragment = document.createDocumentFragment();
-              filteredProjects.forEach((project, index) => {
-                  const card = createProjectCard(project);
-                  card.style.animationDelay = `${index * 0.05}s`; // Reduced delay
-                  card.style.opacity = '0';
-                  card.style.animation = 'fadeInUp 0.3s ease forwards'; // Faster animation
-                  fragment.appendChild(card);
-              });
+              return (searchTerm = '', sortMethod = 'relevance') => {
+                  searchTerm = searchTerm.toLowerCase();
+                  
+                  // Use cached results if nothing changed
+                  if (searchTerm === lastSearchTerm && sortMethod === lastSortMethod) {
+                      return;
+                  }
   
-              projectsContainer.innerHTML = '';
-              projectsContainer.appendChild(fragment);
-          };
-      })();
+                  // Filter projects
+                  const filteredProjects = searchTerm ? 
+                      allProjects.filter(project => matchesSearch(project, searchTerm)) :
+                      allProjects;
   
-      // Add sort event listener with throttling
-      const sortSelect = document.getElementById('sort-select');
-      sortSelect.addEventListener('change', (e) => {
+                  // Sort projects
+                  filteredProjects.sort((a, b) => {
+                      if (searchTerm) {
+                          // Prioritize exact language matches
+                          const langA = (a.language || '').toLowerCase() === searchTerm;
+                          const langB = (b.language || '').toLowerCase() === searchTerm;
+                          if (langA !== langB) return langB - langA;
+                      }
+                      
+                      return getSortValue(b, sortMethod) - getSortValue(a, sortMethod);
+                  });
+  
+                  // Update cache
+                  lastSearchTerm = searchTerm;
+                  lastSortMethod = sortMethod;
+                  cachedResults = filteredProjects;
+  
+                  // Render results with optimized DOM updates
+                  const fragment = document.createDocumentFragment();
+                  filteredProjects.forEach((project, index) => {
+                      const card = createProjectCard(project);
+                      card.style.animationDelay = `${index * 0.05}s`; // Reduced delay
+                      card.style.opacity = '0';
+                      card.style.animation = 'fadeInUp 0.3s ease forwards'; // Faster animation
+                      fragment.appendChild(card);
+                  });
+  
+                  projectsContainer.innerHTML = '';
+                  projectsContainer.appendChild(fragment);
+              };
+          })();
+  
+          // Add sort event listener with throttling
+          const sortSelect = document.getElementById('sort-select');
+          sortSelect.addEventListener('change', (e) => {
+              const searchBar = document.getElementById('project-search');
+              filterAndSortProjects(searchBar.value, e.target.value);
+          });
+  
+          // Add search functionality with optimized debounce
           const searchBar = document.getElementById('project-search');
-          filterAndSortProjects(searchBar.value, e.target.value);
-      });
+          let searchTimeout;
+          searchBar.addEventListener('input', (e) => {
+              clearTimeout(searchTimeout);
+              searchTimeout = setTimeout(() => {
+                  filterAndSortProjects(e.target.value, sortSelect.value);
+              }, 150); // Reduced debounce time
+          });
   
-      // Add search functionality with optimized debounce
-      const searchBar = document.getElementById('project-search');
-      let searchTimeout;
-      searchBar.addEventListener('input', (e) => {
-          clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => {
-              filterAndSortProjects(e.target.value, sortSelect.value);
-          }, 150); // Reduced debounce time
-      });
-  
-      // Initial display
-      filterAndSortProjects('', 'relevance');
+          // Initial display
+          filterAndSortProjects('', 'relevance');
+      } catch (error) {
+          projectsContainer.innerHTML = `
+              <div class="error-state">
+                  <h3>⚠️ Unable to load repositories</h3>
+                  <p>Please try refreshing the page or check your connection.</p>
+                  <p class="error-details">${error.message}</p>
+              </div>
+          `;
+          console.error('Failed to initialize profile:', error);
+      }
   };
   
   // Initialize when DOM is loaded
