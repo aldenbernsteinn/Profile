@@ -3,6 +3,14 @@ import json
 from datetime import datetime
 import os
 
+def fetch_last_commit_date(username, repo_name, headers):
+    """Fetch the date of the last commit for a repository."""
+    url = f"https://api.github.com/repos/{username}/{repo_name}/commits"
+    response = requests.get(url, headers=headers)
+    if response.ok and response.json():
+        return response.json()[0]['commit']['committer']['date']
+    return None
+
 def fetch_github_projects(username):
     url = f"https://api.github.com/users/{username}/repos?per_page=100&type=public"
     headers = {}
@@ -16,13 +24,15 @@ def fetch_github_projects(username):
         repos = response.json()
         projects = []
         for repo in repos:
+            # Fetch last commit date for each repository
+            last_commit_date = fetch_last_commit_date(username, repo["name"], headers)
+            
             projects.append({
                 "name": repo["name"],
                 "description": repo["description"] or "No description available",
                 "language": repo["language"] or "N/A",
                 "html_url": repo["html_url"],
-                "updated_at": repo["updated_at"],
-                "created_at": repo["created_at"],
+                "last_commit": last_commit_date,  # Add last commit date
                 "topics": repo["topics"],
                 "stargazers_count": repo["stargazers_count"]
             })
