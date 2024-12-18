@@ -1017,3 +1017,56 @@ header::-webkit-scrollbar-thumb:hover {
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--background-color);
 }
+
+/* Language tag styling */
+.language-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.language-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Add common language colors */
+[data-language="JavaScript"] .language-dot { background-color: #f1e05a; }
+[data-language="Python"] .language-dot { background-color: #3572A5; }
+[data-language="HTML"] .language-dot { background-color: #e34c26; }
+[data-language="CSS"] .language-dot { background-color: #563d7c; }
+[data-language="PHP"] .language-dot { background-color: #4F5D95; }
+/* Add more language colors as needed */
+
+/* Loading and error states */
+.loading-state, .error-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-color);
+}
+
+.loading-state p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.error-state {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.error-state h3 {
+    margin-bottom: 1rem;
+}
+
+.error-details {
+    margin-top: 1rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #666;
+}
