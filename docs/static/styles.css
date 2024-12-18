@@ -569,12 +569,15 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent page scroll */
 }
 
 /* Profile section */
 header {
-  flex: 0 0 auto;  /* Don't grow or shrink */
-  width: 400px;    /* Fixed width for profile */
+  flex: 0 0 400px; /* Fixed width of 400px, don't grow or shrink */
+  height: calc(100vh - 2rem); /* Full height minus padding */
+  overflow-y: auto; /* Scrollable if content is too long */
   background-color: var(--card-background);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -583,7 +586,11 @@ header {
 
 /* Projects section */
 #projects {
-  flex: 1;         /* Take remaining space */
+  flex: 1;
+  height: calc(100vh - 2rem); /* Full height minus padding */
+  overflow: hidden; /* Hide overflow */
+  display: flex;
+  flex-direction: column;
   background-color: var(--card-background);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -592,10 +599,14 @@ header {
 }
 
 #projects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0.75rem;
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling */
   padding: 0.5rem;
+  margin-right: -0.5rem; /* Compensate for scroll bar */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.75rem;
+  padding-right: 1rem; /* Add space for scrollbar */
 }
 
 /* Adjust project cards to be more compact */
@@ -797,6 +808,7 @@ header, #projects {
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 0 1rem;
+    flex: 0 0 auto; /* Don't grow or shrink */
 }
 
 .repository-title-row {
@@ -948,4 +960,60 @@ header, #projects {
 
 .github-profile-link:hover {
     background: #0256b4;
+}
+
+/* Custom scrollbar styling for the projects container */
+#projects-container::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+#projects-container::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+#projects-container::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease;
+}
+
+#projects-container::-webkit-scrollbar-thumb:hover {
+  background-color: #0256b4;
+}
+
+/* Apply the same scrollbar styling to the header */
+header::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+header::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+header::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease;
+}
+
+header::-webkit-scrollbar-thumb:hover {
+  background-color: #0256b4;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--background-color);
 }
