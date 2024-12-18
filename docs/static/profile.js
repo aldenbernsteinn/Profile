@@ -34,35 +34,49 @@ const fetchGitHubProjects = async (username) => {
 };
 
 // Enhanced createProjectCard function
-const createProjectCard = (project) => {
+function createProjectCard(project, index) {
     const card = document.createElement('div');
     card.className = 'project-card';
-    
-    const clickCount = repoStats.click_counts[project.name] || 0;
-    const lastCommitDate = repoStats.last_commits[project.name] 
-        ? new Date(repoStats.last_commits[project.name])
-        : new Date(0);
+    card.style.animationDelay = `${index * 0.1}s`;
 
-    card.innerHTML = `
-        <h3>${project.name}</h3>
-        <p>${project.description || 'No description available'}</p>
-        <div class="project-stats">
-            <span>${project.language || 'N/A'}</span>
-            <span class="click-count">👁 ${clickCount}</span>
-            <span class="last-commit">📅 ${lastCommitDate.toLocaleDateString()}</span>
-        </div>
-        <a href="${project.html_url}" target="_blank" class="project-link" data-repo="${project.name}">View Project</a>
-    `;
+    const title = document.createElement('h3');
+    const titleLink = document.createElement('a');
+    titleLink.href = project.html_url;
+    titleLink.target = '_blank';
+    titleLink.textContent = project.name;
+    title.appendChild(titleLink);
 
-    // Add click event listener
-    const projectLink = card.querySelector('.project-link');
-    projectLink.addEventListener('click', () => {
-        incrementClickCount(project.name);
-        card.querySelector('.click-count').textContent = `👁 ${repoStats.click_counts[project.name]}`;
+    const description = document.createElement('div');
+    description.className = 'project-description';
+    description.textContent = project.description;
+
+    const languageTags = document.createElement('div');
+    languageTags.className = 'language-tags';
+    project.detected_languages.forEach(lang => {
+        const tag = document.createElement('span');
+        tag.className = 'language-tag';
+        tag.textContent = lang;
+        languageTags.appendChild(tag);
     });
 
+    const stats = document.createElement('div');
+    stats.className = 'project-stats';
+    
+    const lastCommit = new Date(project.updated_at);
+    const timeAgo = getTimeAgo(lastCommit);
+    
+    stats.innerHTML = `
+        <span class="last-commit">Updated ${timeAgo}</span>
+        ${project.stargazers_count > 0 ? `<span>⭐ ${project.stargazers_count}</span>` : ''}
+    `;
+
+    card.appendChild(title);
+    card.appendChild(description);
+    card.appendChild(languageTags);
+    card.appendChild(stats);
+
     return card;
-};
+}
 
 // Enhanced initProfile function
 const initProfile = async () => {
@@ -162,7 +176,7 @@ const initProfile = async () => {
             // Render results with optimized DOM updates
             const fragment = document.createDocumentFragment();
             filteredProjects.forEach((project, index) => {
-                const card = createProjectCard(project);
+                const card = createProjectCard(project, index);
                 card.style.animationDelay = `${index * 0.05}s`; // Reduced delay
                 card.style.opacity = '0';
                 card.style.animation = 'fadeInUp 0.3s ease forwards'; // Faster animation
