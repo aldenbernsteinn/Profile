@@ -2,17 +2,9 @@
   {
     "name": "about",
     "description": "No description available",
-    "github_language": "Python",
-    "detected_languages": [
-      "CSS",
-      "HTML",
-      "JSON",
-      "JavaScript",
-      "Python",
-      "YAML"
-    ],
+    "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/about",
-    "updated_at": "2024-12-18T06:42:04Z",
+    "updated_at": "2024-12-18T06:50:51Z",
     "created_at": "2024-12-03T22:15:14Z",
     "topics": [],
     "stargazers_count": 0
@@ -20,11 +12,7 @@
   {
     "name": "Cron-Job-Compatible-Web-Scraper",
     "description": "This PHP script fetches and processes minor codes from the UCSD Minor Codes page.",
-    "github_language": "PHP",
-    "detected_languages": [
-      "Markdown",
-      "PHP"
-    ],
+    "language": "PHP",
     "html_url": "https://github.com/aldenbernsteinn/Cron-Job-Compatible-Web-Scraper",
     "updated_at": "2024-09-17T00:34:44Z",
     "created_at": "2024-07-20T03:14:00Z",
@@ -34,13 +22,7 @@
   {
     "name": "CY.AI",
     "description": "This program serves as a working template for users to personalize, expand, and create their own AI chat applications. It includes a custom chat box and voice-to-voice functionality to facilitate conversation between the user and AI.",
-    "github_language": "Python",
-    "detected_languages": [
-      "Markdown",
-      "Python",
-      "Python/pip",
-      "YAML"
-    ],
+    "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/CY.AI",
     "updated_at": "2024-08-17T03:36:46Z",
     "created_at": "2024-07-15T05:49:17Z",
@@ -50,10 +32,7 @@
   {
     "name": "ProtocolPilot-AI",
     "description": "ProtocolPilot aims to significantly reduce the time and effort required for compliance checking, while improving accuracy and consistency across various professional standards.",
-    "github_language": "N/A",
-    "detected_languages": [
-      "Markdown"
-    ],
+    "language": "N/A",
     "html_url": "https://github.com/aldenbernsteinn/ProtocolPilot-AI",
     "updated_at": "2024-10-06T21:19:49Z",
     "created_at": "2024-10-05T23:51:09Z",
@@ -63,13 +42,7 @@
   {
     "name": "RAG-Powered-Semantic-Indexing",
     "description": "This program leverages Retrieval-Augmented Generation (RAG) to enable efficient querying of large documents and databases with instant load times once the index is generated.",
-    "github_language": "Python",
-    "detected_languages": [
-      "Markdown",
-      "Python",
-      "Python/pip",
-      "YAML"
-    ],
+    "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/RAG-Powered-Semantic-Indexing",
     "updated_at": "2024-09-17T00:35:27Z",
     "created_at": "2024-08-22T04:38:56Z",
