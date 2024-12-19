@@ -1,14 +1,5 @@
 [
   {
-    "name": "Cron-Job-Compatible-Web-Scraper",
-    "description": "This PHP script fetches and processes minor codes from the UCSD Minor Codes page.",
-    "language": "PHP",
-    "html_url": "https://github.com/aldenbernsteinn/Cron-Job-Compatible-Web-Scraper",
-    "last_commit": "2024-09-17T00:34:41Z",
-    "topics": [],
-    "stargazers_count": 0
-  },
-  {
     "name": "CY.AI",
     "description": "This program serves as a working template for users to personalize, expand, and create their own AI chat applications. It includes a custom chat box and voice-to-voice functionality to facilitate conversation between the user and AI.",
     "language": "Python",
@@ -18,11 +9,20 @@
     "stargazers_count": 0
   },
   {
+    "name": "PHP_Webscraper_For_UCSD_Minor-Curriculum",
+    "description": "This PHP script fetches and processes minor codes from the UCSD Minor Codes page.",
+    "language": "PHP",
+    "html_url": "https://github.com/aldenbernsteinn/PHP_Webscraper_For_UCSD_Minor-Curriculum",
+    "last_commit": "2024-09-17T00:34:41Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "Profile",
-    "description": "No description available",
+    "description": "Portfolio website template featuring real-time GitHub Actions integration for automatic project updates, with animations created using JavaScript and CSS. ",
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2024-12-18T07:49:32Z",
+    "last_commit": "2024-12-18T21:13:42Z",
     "topics": [],
     "stargazers_count": 0
   },
