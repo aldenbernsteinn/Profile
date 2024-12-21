@@ -22,7 +22,7 @@
     "description": "Portfolio website template featuring real-time GitHub Actions integration for automatic project updates, with animations created using JavaScript and CSS. ",
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2024-12-19T01:18:39Z",
+    "last_commit": "2024-12-20T01:14:47Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -41,6 +41,15 @@
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/RAG-Powered-Semantic-Indexing",
     "last_commit": "2024-09-17T00:35:23Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
+    "name": "vscode",
+    "description": "Visual Studio Code",
+    "language": "N/A",
+    "html_url": "https://github.com/aldenbernsteinn/vscode",
+    "last_commit": "2024-12-20T03:39:33Z",
     "topics": [],
     "stargazers_count": 0
   }
