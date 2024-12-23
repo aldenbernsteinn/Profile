@@ -9,10 +9,10 @@
     "stargazers_count": 0
   },
   {
-    "name": "PHP_Webscraper_For_UCSD_Minor-Curriculum",
+    "name": "PHP_Webscraper_For_UCSD-Curriculum",
     "description": "This PHP script fetches and processes minor codes from the UCSD Minor Codes page.",
     "language": "PHP",
-    "html_url": "https://github.com/aldenbernsteinn/PHP_Webscraper_For_UCSD_Minor-Curriculum",
+    "html_url": "https://github.com/aldenbernsteinn/PHP_Webscraper_For_UCSD-Curriculum",
     "last_commit": "2024-09-17T00:34:41Z",
     "topics": [],
     "stargazers_count": 0
@@ -22,7 +22,7 @@
     "description": "Portfolio website template featuring real-time GitHub Actions integration for automatic project updates, with animations created using JavaScript and CSS. ",
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2024-12-23T06:44:57Z",
+    "last_commit": "2024-12-23T06:45:26Z",
     "topics": [],
     "stargazers_count": 0
   },
