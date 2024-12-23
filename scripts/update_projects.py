@@ -24,6 +24,10 @@ def fetch_github_projects(username):
         repos = response.json()
         projects = []
         for repo in repos:
+            # Skip the vscode repository
+            if repo["name"].lower() == "vscode":
+                continue
+                
             # Fetch last commit date for each repository
             last_commit_date = fetch_last_commit_date(username, repo["name"], headers)
             
@@ -32,7 +36,7 @@ def fetch_github_projects(username):
                 "description": repo["description"] or "No description available",
                 "language": repo["language"] or "N/A",
                 "html_url": repo["html_url"],
-                "last_commit": last_commit_date,  # Add last commit date
+                "last_commit": last_commit_date,
                 "topics": repo["topics"],
                 "stargazers_count": repo["stargazers_count"]
             })
