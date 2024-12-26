@@ -1244,13 +1244,14 @@ header::-webkit-scrollbar-thumb:hover {
     position: sticky;
     top: 3rem; /* Match the padding-top */
     background: var(--card-background);
-    z-index: 1000;
+    z-index: 1001; /* Increased z-index */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-color);
     margin: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for visual separation */
   }
 
   .dialog-title {
@@ -1299,7 +1300,9 @@ header::-webkit-scrollbar-thumb:hover {
   }
 
   .full-description {
-    padding: 1.5rem;  /* Add padding to content */
+    position: relative;
+    z-index: 1000; /* Lower z-index than header */
+    padding: 1.5rem;
   }
 }
 
@@ -1346,4 +1349,3 @@ header::-webkit-scrollbar-thumb:hover {
     gap: 0.5rem;
   }
 }
-
