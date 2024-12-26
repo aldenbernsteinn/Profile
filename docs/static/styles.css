@@ -1048,15 +1048,44 @@ header::-webkit-scrollbar-thumb:hover {
 
   header {
     flex: none;
-    width: auto; /* Changed from 100% to auto */
+    width: auto;
     height: auto;
+    min-height: auto;
     max-height: none;
     margin-bottom: 0.5rem;
-    padding: 1rem; /* Reduced padding */
+    padding: 1rem;
+    overflow: visible;
   }
 
   .custom-linkedin-badge {
-    padding: 1rem; /* Reduced padding */
+    padding: 1rem;
+    width: auto;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .profile-info {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: visible;
+  }
+
+  .main-container {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    padding: 0.5rem;
+  }
+
+  .profile-actions {
+    margin: 1rem 0;
+    width: 100%;
   }
 
   .profile-image-container img {
@@ -1100,67 +1129,6 @@ header::-webkit-scrollbar-thumb:hover {
   .repository-subtitle {
     font-size: 1rem;
     margin: 0.5rem 0 1rem 0;
-  }
-
-  .profile-badge__content-profile-headline,
-  .profile-badge__content-profile-company-name {
-    font-size: 0.9rem;
-    white-space: normal; /* Allow text to wrap */
-    text-align: center;
-    line-height: 1.4;
-    padding: 0 0.5rem;
-    word-wrap: break-word;
-  }
-
-  .profile-badge__content-profile-headline {
-    margin-bottom: 0.5rem;
-  }
-
-  .custom-linkedin-badge {
-    padding: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .profile-info {
-    width: 100%;
-    padding: 0 0.5rem;
-    box-sizing: border-box;
-  }
-
-  .dialog-content {
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    margin: 0;
-    border-radius: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 4rem; /* Add space for the close button */
-  }
-
-  .close-dialog {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background: var(--primary-color);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    z-index: 1001; /* Ensure it's above other content */
-    opacity: 1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .close-dialog:hover {
-    background: var(--primary-hover);
   }
 }
 
@@ -1206,10 +1174,5 @@ header::-webkit-scrollbar-thumb:hover {
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
-  .profile-badge__content-profile-headline,
-  .profile-badge__content-profile-company-name {
-    font-size: 0.85rem;
-    padding: 0 0.25rem;
-  }
 }
+
