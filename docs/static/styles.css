@@ -1130,6 +1130,20 @@ header::-webkit-scrollbar-thumb:hover {
     font-size: 1rem;
     margin: 0.5rem 0 1rem 0;
   }
+
+  .dialog-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 0; /* Remove right padding to accommodate close button */
+  }
+
+  .close-dialog {
+    position: relative; /* Change from fixed to relative */
+    top: auto;
+    right: auto;
+    margin-left: 1rem; /* Add space between title and close button */
+  }
 }
 
 /* Additional breakpoint for very small devices */
