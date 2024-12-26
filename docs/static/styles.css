@@ -1043,65 +1043,106 @@ header::-webkit-scrollbar-thumb:hover {
     height: auto;
     overflow: visible;
     padding: 0.5rem;
+    gap: 0.5rem; /* Reduced gap for mobile */
   }
 
   header {
     flex: none;
-    width: 100%;
+    width: auto; /* Changed from 100% to auto */
     height: auto;
     max-height: none;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem; /* Reduced padding */
+  }
+
+  .custom-linkedin-badge {
+    padding: 1rem; /* Reduced padding */
+  }
+
+  .profile-image-container img {
+    width: 120px; /* Smaller profile image */
+    height: 120px;
+  }
+
+  .profile-badge__content-profile-name {
+    font-size: 1.5rem; /* Smaller font */
+    margin-bottom: 0.5rem;
   }
 
   #projects {
     flex: none;
     height: auto;
-    min-height: 500px;
+    min-height: 400px;
+    padding: 1rem;
+  }
+
+  #projects-container {
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .project-card {
+    max-height: none; /* Allow cards to expand */
+    padding: 1rem;
   }
 
   .repository-controls {
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
   }
 
-  .search-bar {
-    width: 100%;
+  .repository-title-row h2 {
+    font-size: 1.75rem; /* Smaller title */
   }
 
-  .sort-select {
-    width: 100%;
-  }
-
-  .github-link {
-    width: 100%;
-    text-align: center;
-    padding: 0.5rem;
-  }
-
-  .custom-linkedin-badge {
-    max-width: 100%;
-  }
-
-  .work-logos {
-    justify-content: center;
+  .repository-subtitle {
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem 0;
   }
 }
 
-/* iPhone SE and smaller devices */
+/* Additional breakpoint for very small devices */
 @media screen and (max-width: 375px) {
+  .main-container {
+    padding: 0.25rem;
+  }
+
+  header, #projects {
+    border-radius: 4px; /* Smaller border radius */
+  }
+
+  .profile-image-container img {
+    width: 100px; /* Even smaller profile image */
+    height: 100px;
+  }
+
   .profile-badge__content-profile-name {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .profile-badge__content-profile-headline {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
-  .work-logo {
-    max-width: 80px;
+  .linkedin-button, .about-me-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    min-width: 160px;
   }
 
   .project-card {
     padding: 0.75rem;
+    margin: 0.25rem 0;
+  }
+
+  .project-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .project-stats {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
