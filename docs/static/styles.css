@@ -1237,20 +1237,20 @@ header::-webkit-scrollbar-thumb:hover {
     margin: 0;
     border-radius: 0;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 0; /* Remove default padding */
   }
 
   .dialog-header {
     position: sticky;
     top: 0;
-    background: white;
+    background: var(--card-background);
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1.5rem;  /* Increase padding */
     border-bottom: 1px solid var(--border-color);
-    margin: -1rem -1rem 1rem -1rem;
+    margin: 0;  /* Remove negative margins */
   }
 
   .dialog-title {
@@ -1297,6 +1297,10 @@ header::-webkit-scrollbar-thumb:hover {
   .dialog-header::after {
     display: none;
   }
+
+  .full-description {
+    padding: 1.5rem;  /* Add padding to content */
+  }
 }
 
 /* Additional breakpoint for very small devices */
@@ -1342,3 +1346,4 @@ header::-webkit-scrollbar-thumb:hover {
     gap: 0.5rem;
   }
 }
+
