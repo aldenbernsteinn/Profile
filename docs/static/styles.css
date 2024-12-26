@@ -1242,15 +1242,15 @@ header::-webkit-scrollbar-thumb:hover {
 
   .dialog-header {
     position: sticky;
-    top: 0;
+    top: 3rem; /* Match the padding-top */
     background: var(--card-background);
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem;  /* Increase padding */
+    padding: 1.5rem;
     border-bottom: 1px solid var(--border-color);
-    margin: 0;  /* Remove negative margins */
+    margin: 0;
   }
 
   .dialog-title {
