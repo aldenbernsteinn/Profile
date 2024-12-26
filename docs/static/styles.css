@@ -1030,7 +1030,78 @@ header::-webkit-scrollbar-thumb:hover {
   background-color: #0256b4;
 }
 
+
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--background-color);
+}
+
+/* Responsive breakpoints */
+@media screen and (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    padding: 0.5rem;
+  }
+
+  header {
+    flex: none;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin-bottom: 1rem;
+  }
+
+  #projects {
+    flex: none;
+    height: auto;
+    min-height: 500px;
+  }
+
+  .repository-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .sort-select {
+    width: 100%;
+  }
+
+  .github-link {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .custom-linkedin-badge {
+    max-width: 100%;
+  }
+
+  .work-logos {
+    justify-content: center;
+  }
+}
+
+/* iPhone SE and smaller devices */
+@media screen and (max-width: 375px) {
+  .profile-badge__content-profile-name {
+    font-size: 1.5rem;
+  }
+
+  .profile-badge__content-profile-headline {
+    font-size: 0.9rem;
+  }
+
+  .work-logo {
+    max-width: 80px;
+  }
+
+  .project-card {
+    padding: 0.75rem;
+  }
 }
