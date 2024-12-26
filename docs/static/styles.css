@@ -1238,13 +1238,11 @@ header::-webkit-scrollbar-thumb:hover {
     border-radius: 0;
     overflow-y: auto;
     padding: 0; /* Remove default padding */
-    padding-top: 3rem;
-    background: var(--card-background);
   }
 
   .dialog-header {
     position: sticky;
-    top: 0; /* Change from 3rem to 0 */
+    top: 0;
     background: var(--card-background);
     z-index: 1001;
     display: flex;
@@ -1252,7 +1250,7 @@ header::-webkit-scrollbar-thumb:hover {
     justify-content: space-between;
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-color);
-    margin-top: 3rem; /* Move the spacing to margin instead of top positioning */
+    margin-top: 3rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -1302,10 +1300,7 @@ header::-webkit-scrollbar-thumb:hover {
   }
 
   .full-description {
-    position: relative;
-    z-index: 1000;
-    padding: 1.5rem;
-    background: var(--card-background);
+    padding: 1.5rem;  /* Add padding to content */
   }
 }
 
@@ -1350,6 +1345,49 @@ header::-webkit-scrollbar-thumb:hover {
   .project-stats {
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dialog-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+    overflow-y: auto;
+    padding: 0;
+    padding-top: 3rem;
+    background: var(--card-background); /* Ensure white background */
+  }
+
+  .dialog-header {
+    position: sticky;
+    top: 0;
+    background: var(--card-background);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-top: 3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dialog-overlay {
+    background: var(--card-background); /* Change overlay background to white */
+  }
+
+  .full-description {
+    position: relative;
+    z-index: 1000;
+    padding: 1.5rem;
+    background: var(--card-background);
   }
 }
 
