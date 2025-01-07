@@ -16,8 +16,9 @@ def fetch_github_projects(username):
     headers = {}
     
     # Use GitHub token if available
-    if 'GITHUB_TOKEN' in os.environ:
-        headers['Authorization'] = f"token {os.environ['GITHUB_TOKEN']}"
+    github_token = os.environ.get('GITHUB_TOKEN')
+    if github_token:
+        headers['Authorization'] = f"token {github_token}"
     
     response = requests.get(url, headers=headers)
     if response.ok:
@@ -49,10 +50,10 @@ def main():
     projects = fetch_github_projects(username)
     
     # Ensure the static directory exists
-    os.makedirs("docs/static", exist_ok=True)
+    os.makedirs("src/static", exist_ok=True)
     
     # Save to static file
-    with open("docs/static/projects_static.json", "w", encoding='utf-8') as f:
+    with open("src/static/projects_static.json", "w", encoding='utf-8') as f:
         json.dump(projects, f, indent=2)
     
     print(f"Successfully generated projects_static.json with {len(projects)} repositories")
