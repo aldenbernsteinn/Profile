@@ -59,4 +59,4 @@ def main():
     print(f"Successfully generated projects_static.json with {len(projects)} repositories")
 
 if __name__ == "__main__":
-    main() 
+    main()  
