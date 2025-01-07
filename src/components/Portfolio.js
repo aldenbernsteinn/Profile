@@ -398,7 +398,9 @@ const Portfolio = () => {
                   <span>
                     <FiStar style={{ verticalAlign: 'middle' }} /> {project.stargazers_count || 0}
                   </span>
-                  <span>Last updated: {new Date(project.updated_at).toLocaleDateString()}</span>
+                  <span>
+                    Last updated: {project.last_commit ? new Date(project.last_commit).toLocaleDateString() : 'N/A'}
+                  </span>
                 </RepoStats>
               </RepositoryCard>
             ))}
