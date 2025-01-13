@@ -11,9 +11,9 @@
   {
     "name": "Personal-Web-Template",
     "description": "Portfolio website template featuring real-time GitHub Actions integration for automatic project updates, with animations created using JavaScript and CSS. ",
-    "language": "JavaScript",
+    "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/Personal-Web-Template",
-    "last_commit": "2025-01-07T07:03:23Z",
+    "last_commit": "2025-01-13T01:26:32Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -31,7 +31,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-01-13T01:23:38Z",
+    "last_commit": "2025-01-13T01:24:23Z",
     "topics": [],
     "stargazers_count": 0
   },
