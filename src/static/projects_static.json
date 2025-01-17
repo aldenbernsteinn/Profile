@@ -1,10 +1,28 @@
 [
   {
+    "name": "COGS108_Repo",
+    "description": "No description available",
+    "language": "N/A",
+    "html_url": "https://github.com/aldenbernsteinn/COGS108_Repo",
+    "last_commit": "2025-01-16T23:58:25Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "CY.AI",
     "description": "This program serves as a working template for users to personalize, expand, and create their own AI chat applications. It includes a custom chat box and voice-to-voice functionality to facilitate conversation between the user and AI.",
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/CY.AI",
     "last_commit": "2024-08-17T03:36:42Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
+    "name": "MyFirstPullRequest",
+    "description": "To be used for the assignments in Cogs 108",
+    "language": "N/A",
+    "html_url": "https://github.com/aldenbernsteinn/MyFirstPullRequest",
+    "last_commit": "2025-01-17T00:06:41Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -31,7 +49,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-01-15T01:44:04Z",
+    "last_commit": "2025-01-16T01:43:11Z",
     "topics": [],
     "stargazers_count": 0
   },
