@@ -49,7 +49,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-05-13T02:03:15Z",
+    "last_commit": "2025-05-14T02:01:54Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -68,6 +68,15 @@
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/RAG-Powered-Semantic-Indexing",
     "last_commit": "2024-09-17T00:35:23Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
+    "name": "system-prompts-and-models-of-ai-tools",
+    "description": "FULL v0, Cursor, Manus, Same.dev, Lovable, Devin, Replit Agent, Windsurf Agent & VSCode Agent (And other Open Sourced) System Prompts, Tools & AI Models.",
+    "language": "N/A",
+    "html_url": "https://github.com/aldenbernsteinn/system-prompts-and-models-of-ai-tools",
+    "last_commit": "2025-05-12T09:41:46Z",
     "topics": [],
     "stargazers_count": 0
   }
