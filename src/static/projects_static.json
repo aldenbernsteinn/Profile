@@ -27,6 +27,15 @@
     "stargazers_count": 0
   },
   {
+    "name": "notebooks",
+    "description": "Jupyter notebooks for the Natural Language Processing with Transformers book",
+    "language": "N/A",
+    "html_url": "https://github.com/aldenbernsteinn/notebooks",
+    "last_commit": "2024-08-21T08:45:29Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "Personal-Web-Template",
     "description": "Portfolio website template featuring real-time GitHub Actions integration for automatic project updates, with animations created using JavaScript and CSS. ",
     "language": "Python",
@@ -49,7 +58,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-06-15T02:22:03Z",
+    "last_commit": "2025-06-16T02:10:29Z",
     "topics": [],
     "stargazers_count": 0
   },
