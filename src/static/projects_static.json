@@ -18,6 +18,15 @@
     "stargazers_count": 0
   },
   {
+    "name": "GDC-Update-Cruises-From-R2R",
+    "description": "No description available",
+    "language": "Python",
+    "html_url": "https://github.com/aldenbernsteinn/GDC-Update-Cruises-From-R2R",
+    "last_commit": "2025-11-25T22:30:11Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "MyFirstPullRequest",
     "description": "To be used for the assignments in Cogs 108",
     "language": "N/A",
@@ -58,7 +67,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-11-24T02:10:26Z",
+    "last_commit": "2025-11-25T02:03:35Z",
     "topics": [],
     "stargazers_count": 0
   },
