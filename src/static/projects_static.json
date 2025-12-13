@@ -9,6 +9,15 @@
     "stargazers_count": 0
   },
   {
+    "name": "COGS118A-FinalProject",
+    "description": "No description available",
+    "language": "Jupyter Notebook",
+    "html_url": "https://github.com/aldenbernsteinn/COGS118A-FinalProject",
+    "last_commit": "2025-12-12T22:26:48Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "CY.AI",
     "description": "This program serves as a working template for users to personalize, expand, and create their own AI chat applications. It includes a custom chat box and voice-to-voice functionality to facilitate conversation between the user and AI.",
     "language": "Python",
@@ -67,7 +76,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2025-12-11T02:10:04Z",
+    "last_commit": "2025-12-12T02:10:05Z",
     "topics": [],
     "stargazers_count": 0
   },
