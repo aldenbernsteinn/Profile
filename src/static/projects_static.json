@@ -1,5 +1,14 @@
 [
   {
+    "name": "arvel-lens-iris",
+    "description": "Mac video transcription app powered by Parakeet ASR",
+    "language": "Svelte",
+    "html_url": "https://github.com/aldenbernsteinn/arvel-lens-iris",
+    "last_commit": "2026-04-08T22:10:26Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "COGS-181-Final-Project-AldenB",
     "description": "No description available",
     "language": "Python",
@@ -94,7 +103,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2026-04-07T03:19:01Z",
+    "last_commit": "2026-04-08T03:21:19Z",
     "topics": [],
     "stargazers_count": 0
   },
