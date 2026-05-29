@@ -9,6 +9,15 @@
     "stargazers_count": 0
   },
   {
+    "name": "breeze-terminal",
+    "description": "The battery-efficient AI terminal \u2014 Rust, macOS, no GPU.",
+    "language": "Rust",
+    "html_url": "https://github.com/aldenbernsteinn/breeze-terminal",
+    "last_commit": "2026-05-28T22:12:54Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
     "name": "COGS-181-Final-Project-AldenB",
     "description": "No description available",
     "language": "Python",
@@ -112,7 +121,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2026-05-27T04:37:53Z",
+    "last_commit": "2026-05-28T04:17:50Z",
     "topics": [],
     "stargazers_count": 0
   },
