@@ -76,7 +76,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2026-08-12T02:29:52Z",
+    "last_commit": "2026-08-13T02:31:17Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -95,6 +95,15 @@
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/RAG-Powered-Semantic-Indexing",
     "last_commit": "2024-09-17T00:35:23Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
+    "name": "scout2",
+    "description": "Distilled char-CNN prompt-injection classifier (651 KB, beats 22M-param DeBERTa teacher on the deployment surface, 430x smaller, 3x faster CPU)",
+    "language": "Python",
+    "html_url": "https://github.com/aldenbernsteinn/scout2",
+    "last_commit": "2026-05-14T09:50:51Z",
     "topics": [],
     "stargazers_count": 0
   },
