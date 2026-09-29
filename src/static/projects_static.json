@@ -76,7 +76,7 @@
     "description": "No description available",
     "language": "JavaScript",
     "html_url": "https://github.com/aldenbernsteinn/Profile",
-    "last_commit": "2026-09-27T04:59:42Z",
+    "last_commit": "2026-09-28T05:01:13Z",
     "topics": [],
     "stargazers_count": 0
   },
@@ -104,6 +104,15 @@
     "language": "Python",
     "html_url": "https://github.com/aldenbernsteinn/scout2",
     "last_commit": "2026-05-14T09:50:51Z",
+    "topics": [],
+    "stargazers_count": 0
+  },
+  {
+    "name": "teaching-portfolio",
+    "description": "No description available",
+    "language": "CSS",
+    "html_url": "https://github.com/aldenbernsteinn/teaching-portfolio",
+    "last_commit": "2026-09-28T20:03:03Z",
     "topics": [],
     "stargazers_count": 0
   },
